@@ -1,0 +1,33 @@
+{
+  "name": "speedlog",
+  "version": "0.1.0",
+  "description": "Logs speed test results at a set interval",
+  "main": "speedlog.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loksland/speedlog.git"
+  },
+  "keywords": [
+    "speedtest"
+  ],
+  "author": "loksland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loksland/speedlog/issues"
+  },
+  "homepage": "https://github.com/loksland/speedlog#readme",
+  "preferGlobal": "true",  
+  "dependencies": {
+    "cron": "^1.2.1",
+    "moment": "^2.18.1",
+    "readline-sync": "^1.4.7",
+    "speedtest-net": "^1.3.1",
+    "user-settings": "^0.1.5"
+  },
+  "bin": {
+    "speedlog": "speedlog.js"
+  }
+}
