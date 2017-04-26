@@ -23,7 +23,7 @@ function SpeedLog(){
 	
 	var COLS = [];
 	COLS = COLS.concat(['time']);
-	COLS = COLS.concat(['simple.test','speeds.download', 'speeds.upload', 'speeds.originalDownload','speeds.originalUpload']);
+	COLS = COLS.concat(['speeds.download', 'speeds.upload', 'speeds.originalDownload','speeds.originalUpload']);
 	COLS = COLS.concat(['client.ip', 'client.lat', 'client.lon', 'client.isp', 'client.isprating', 'client.rating', 'client.ispdlavg', 'client.ispulavg']);
 	COLS = COLS.concat(['server.host','server.lat','server.lon','server.location','server.country','server.cc','server.sponsor','server.distance','server.distanceMi','server.ping','server.id']);
 	COLS = COLS.concat(['error']);
@@ -64,7 +64,7 @@ function SpeedLog(){
 	
 	console.log('');
 	var cronPatternDefault = settings.get('cron-pattern');
-	if (!utils.isSet(dataFileDefault)){
+	if (!utils.isSet(cronPatternDefault)){
 		cronPatternDefault = '0,30 * * * *'; // every 30 mins
 	}
 	var cronPattern = readlineSync.question('Cron pattern?\n' + (utils.isSet(cronPatternDefault) ? '('+cronPatternDefault+')\n' : ''), {
@@ -110,8 +110,8 @@ function SpeedLog(){
 	if (!fs.existsSync(dataFile)){
 		fs.writeFileSync(dataFile, '', 'utf8');
 	}
-	if (fs.statSync(dataFile).isDirectory() || !utils.isFileOfExtension(dataFile, 'csv')){
-		throw new Error('Invalid input, must not be a dir and have ext `.csv`');
+	if (!fs.existsSync(dataFile) || fs.statSync(dataFile).isDirectory() || !utils.isFileOfExtension(dataFile, 'csv')){
+		throw new Error('Invalid input, must exist, not be dir and have ext `.csv`');
 	}	
 	settings.set('data-file', dataFile);
 	if (!utils.isSet(dataFileDefault)){
@@ -150,7 +150,9 @@ function SpeedLog(){
 				data.time = testTime;
 				writeObjToCSV(data, dataFile, COLS, CSV_SEPARATOR_CHAR,CSV_NEWLINE_CHAR);
 				
-				console.log('[speedlog] waiting...');
+				setTimeout(function(){
+					console.log('[speedlog] waiting...');
+				}, 1000);
 	
 			});
 	
